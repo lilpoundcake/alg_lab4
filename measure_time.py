@@ -7,6 +7,28 @@ from tqdm import tqdm
 from statistics import mean
 import numpy as np
 
+def selection_sort(a):
+    min_val = a[0]
+    min_num = 0
+    mem_val = 0
+    n = 0
+    #print(a)
+
+    while n != len(a):
+        min_val = a[n]
+        min_num = n
+
+        for i in range(n, len(a)):
+            if a[i] < min_val:
+                min_val = a[i]
+                min_num = i
+            else:
+                continue
+
+            mem_val = a[n]
+            a[n] = min_val
+            a[min_num] = mem_val
+        n += 1
 
 def measure_search_time(sort_function, sz, repeats):
     """
@@ -25,6 +47,7 @@ def measure_search_time(sort_function, sz, repeats):
 def main():
     algorithms = {
         'sorted': sorted,
+        'selection_sort': lambda a: selection_sort(a),
         'np_quicksort': lambda a: np.sort(a, kind='quicksort'),
         'np_mergesort': lambda a: np.sort(a, kind='mergesort')
     }
