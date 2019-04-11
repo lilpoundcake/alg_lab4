@@ -12,7 +12,6 @@ def selection_sort(a):
     min_num = 0
     mem_val = 0
     n = 0
-    #print(a)
 
     while n != len(a):
         min_val = a[n]
@@ -29,6 +28,21 @@ def selection_sort(a):
             a[n] = min_val
             a[min_num] = mem_val
         n += 1
+
+def insertion_sort(a):    
+    for i in range(1, len(a)):
+        if i == 1 and a[0] > a[i]:
+            mem = a[0]
+            a[0] = a[i]
+            a[i] = mem
+        elif a[i] > a[i-1]:
+            continue
+        elif a[i] < a[i-1]:
+            for x in range(i, 0, -1):
+                if a[x] < a[x-1] and i != 0:
+                    mem = a[x-1]
+                    a[x-1] = a[x]
+                    a[x] = mem
 
 def measure_search_time(sort_function, sz, repeats):
     """
@@ -48,11 +62,12 @@ def main():
     algorithms = {
         'sorted': sorted,
         'selection_sort': lambda a: selection_sort(a),
+        'insertion_sort': lambda a: insertion_sort(a),
         'np_quicksort': lambda a: np.sort(a, kind='quicksort'),
         'np_mergesort': lambda a: np.sort(a, kind='mergesort')
     }
 
-    sizes = list(range(1, 100, 5)) + list(range(200, 5000, 50))
+    sizes = list(range(1, 100, 5)) + list(range(20, 500, 50))
     avg_time = {alg: [] for alg in algorithms}
     for sz in tqdm(sizes):
         for alg_name, f in algorithms.items():

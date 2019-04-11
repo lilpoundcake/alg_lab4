@@ -8,7 +8,6 @@ def selection_sort(a):
     min_num = 0
     mem_val = 0
     n = 0
-    print(a)
 
     while n != len(a):
         min_val = a[n]
@@ -25,8 +24,3 @@ def selection_sort(a):
             a[n] = min_val
             a[min_num] = mem_val
         n += 1
-
-
-a = [random.randint(1, 100) for i in range(20)]
-selection_sort(a)
-print(a)
