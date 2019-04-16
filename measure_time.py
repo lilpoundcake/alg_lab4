@@ -44,6 +44,29 @@ def insertion_sort(a):
                     a[x-1] = a[x]
                     a[x] = mem
 
+def quick_sort(massive, left=0, right=None):
+    if right == None:
+        right = len(massive) - 1
+    if left >= right: 
+        return
+    
+    left_m = left
+    right_m = right
+    fix = left
+    while left <= right:
+        while massive[left] < massive[fix]:
+            left += 1
+        while massive[right] > massive[fix]:
+            right -= 1
+        if left <= right:
+            massive[left], massive[right] = massive[right], massive[left]
+            left += 1
+            right -= 1
+
+    quick_sort(massive, left_m, right)
+    quick_sort(massive, left, right_m)
+    return massive
+
 def measure_search_time(sort_function, sz, repeats):
     """
     Возвращает результат замеров скорости выполнения сортировки
@@ -63,11 +86,12 @@ def main():
         'sorted': sorted,
         'selection_sort': lambda a: selection_sort(a),
         'insertion_sort': lambda a: insertion_sort(a),
+        'quick_sort': lambda a: quick_sort(a),
         'np_quicksort': lambda a: np.sort(a, kind='quicksort'),
         'np_mergesort': lambda a: np.sort(a, kind='mergesort')
     }
 
-    sizes = list(range(1, 100, 5)) + list(range(20, 500, 50))
+    sizes = list(range(1, 100, 10)) + list(range(20, 500, 50))
     avg_time = {alg: [] for alg in algorithms}
     for sz in tqdm(sizes):
         for alg_name, f in algorithms.items():
